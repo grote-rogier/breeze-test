@@ -1,21 +1,32 @@
 <template>
     <div>
-        This is the main page
-        <div>
+        <h1 class="text-lg font-bold">This is the main page</h1>
+        <div class="mb-3">
+            <p>Composable "useMouse"</p>
             x: {{ x }}, y: {{ y }}
         </div>
-        <div>
-            <h1>Client fetched users</h1>
+        <div class="mb-3">
+            <h1 class="text-lg font-bold">Client fetched users</h1>
             <p>These users are fetched by the client, so this is not SEO friendly</p>
             <ul>
-                <li v-for="user in csUsers" :key="user.id">{{ user.name }}</li>
+                <li
+                    v-for="user in csUsers"
+                    :key="user.id"
+                    class="italic list-disc list-inside"
+                    v-text="user.name"
+                />
             </ul>
         </div>
-        <div>
-            <h1>Server fetched users</h1>
+        <div class="mb-3">
+            <h1 class="text-lg font-bold">Server fetched users</h1>
             <p>These users are pre-fetched by the node server, so this IS SEO friendly</p>
             <ul>
-                <li v-for="user in ssUsers" :key="user.id">{{ user.name }}</li>
+                <li
+                    v-for="user in ssUsers"
+                    :key="user.id"
+                    class="italic list-disc list-inside"
+                    v-text="user.name"
+                />
             </ul>
         </div>
     </div>
