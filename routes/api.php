@@ -18,6 +18,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('posts', [\App\Http\Controllers\PostController::class, 'index']);
+Route::get('posts/{post}', [\App\Http\Controllers\PostController::class, 'show']);
+
 Route::get('dashboard', function() {
     return response()->json(['logged in']);
 });
