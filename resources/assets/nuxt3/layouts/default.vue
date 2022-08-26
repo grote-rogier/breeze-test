@@ -7,6 +7,7 @@
                 <NuxtLink to="/posts" class="font-bold">Posts</NuxtLink>
             </div>
             <ul class="flex align-center space-x-12">
+                <li><NuxtLink to="/auth/login" class="font-bold">Login</NuxtLink></li>
                 <li><NuxtLink to="/about" class="font-bold">About</NuxtLink></li>
                 <li><NuxtLink to="/contact" class="font-bold">Contact</NuxtLink></li>
             </ul>
