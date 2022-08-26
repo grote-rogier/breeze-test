@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return Post::with('user:id,name')->get();
     }
 
     /**
@@ -47,6 +47,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post->load('user:id,name');
+
         return $post;
     }
 
