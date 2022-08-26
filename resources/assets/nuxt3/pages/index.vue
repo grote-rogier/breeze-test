@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1 class="text-lg font-bold">This is the main page</h1>
+        <Title>Home | {{ title }}</Title>
+        <h1 class="text-xl font-bold">This is the main page</h1>
         <div class="mb-3">
             <p>Composable "useMouse"</p>
             x: {{ x }}, y: {{ y }}
@@ -35,6 +36,7 @@
 <script setup>
     const { x, y } = useMouse()
     const csUsers = ref([])
+    const title = useState('title')
 
     // Client fetches users, this is not seo friendly
     onMounted(() => {

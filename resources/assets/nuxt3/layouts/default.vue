@@ -1,15 +1,27 @@
 <template>
-    <div>
-        <Title>Breeze Test</Title>
-        <nav class="bg-amber-200 p-4 flex justify-between align-center border-b border-amber-500 shadow-md">
+    <div class="bg-gray-100 min-h-screen text-gray-900">
+        <Title>{{ title }}</Title>
+        <nav class="bg-amber-200 px-6 py-4 flex justify-between items-center border-b border-amber-500 shadow-md">
             <NuxtLink to="/" class="font-bold">Home</NuxtLink>
-            <ul class="flex justify-between align-center gap-4">
+            <ul class="flex align-center space-x-12">
                 <li><NuxtLink to="/about" class="font-bold">About</NuxtLink></li>
                 <li><NuxtLink to="/contact" class="font-bold">Contact</NuxtLink></li>
             </ul>
         </nav>
-        <div class="p-4">
+
+        <div class="container mx-auto w-1/2 py-8">
             <slot />
         </div>
     </div>
 </template>
+
+<script setup>
+const title = useState('title', () => 'Nuxt3 Breeze Test')
+</script>
+
+
+<style>
+    .router-link-active {
+        border-bottom: 1px solid rgba(0 0 0 / 20%)
+    }
+</style>
