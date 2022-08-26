@@ -1,8 +1,10 @@
-import { defineNuxtPlugin } from '#app'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
 export default defineNuxtPlugin(nuxtApp => {
+    const config = useRuntimeConfig()
+
     nuxtApp.provide(
         'apiFetch',
-        $fetch.create({ baseURL: 'http://breeze-test.localtest.me/' })
+        $fetch.create({ baseURL: config.BASE_URL })
     )
 })
