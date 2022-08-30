@@ -1,6 +1,9 @@
 <template>
     <div>
         <Title>Login | {{ title }}</Title>
+        <ul v-if="errors.length">
+            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+        </ul>
         <form @submit.prevent="login">
             <input
                 type="email"
@@ -29,13 +32,25 @@
 
     const { $apiFetch } = useNuxtApp()
 
+    async function csrf() {
+        return await $apiFetch('/sanctum/csrf-cookie')
+    }
+
     async function login() {
-        await $apiFetch('/login', {
-            method: 'POST',
-            body: {
-                email: email.value,
-                password: password.value
-            }
-        })
+        await csrf()
+        // await $apiFetch('/sanctum/csrf-cookie')
+
+        try {
+            await $apiFetch('/login', {
+                method: 'POST',
+                body: {
+                    email: email.value,
+                    password: password.value
+                }
+            })
+
+        } catch (err) {
+            errors.value = Object.values(err.data.errors).flat()
+        }
     }
 </script>
