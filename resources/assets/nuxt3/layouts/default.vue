@@ -6,13 +6,27 @@
                 <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/">Home</NuxtLink></li>
                 <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/posts">Posts</NuxtLink></li>
             </ul>
-            <ul class="flex align-center space-x-4">
-                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/auth/login">Login</NuxtLink></li>
-                <li class="p-4 font-bold hover:bg-amber-400 cursor-pointer" @click="logout">Logout</li>
-                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/auth/register">Register</NuxtLink></li>
-                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/about">About</NuxtLink></li>
-                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/contact">Contact</NuxtLink></li>
-            </ul>
+            <ClientOnly>
+                <ul class="flex align-center space-x-4">
+                    <li v-if="isLoggedIn" class="p-4 font-bold bg-amber-100">
+                        {{ getUser()?.name }}
+                    </li>
+                    <li v-else class="p-4 font-bold hover:bg-amber-400">
+                        <NuxtLink to="/auth/login">Login</NuxtLink>
+                    </li>
+                    <li v-if="isLoggedIn" class="p-4 font-bold hover:bg-amber-400 cursor-pointer" @click="logout">
+                        Logout
+                    </li>
+                    <li
+                        v-if="!isLoggedIn"
+                        class="p-4 font-bold hover:bg-amber-400"
+                    >
+                        <NuxtLink to="/auth/register">Register</NuxtLink>
+                    </li>
+                    <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/about">About</NuxtLink></li>
+                    <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/contact">Contact</NuxtLink></li>
+                </ul>
+            </ClientOnly>
         </nav>
 
         <div class="container mx-auto w-1/2 py-8">
@@ -22,7 +36,10 @@
 </template>
 
 <script setup>
+import { useAuth } from '../composables/useAuth';
+
 const { $apiFetch } = useNuxtApp()
+const { getUser, isLoggedIn, removeUser } = useAuth()
 const title = useState('title', () => 'Nuxt3 Breeze Test')
 
 async function logout() {
@@ -33,11 +50,12 @@ async function logout() {
     } catch (err) {
         console.error(err)
     } finally {
-        navigateTo('/')
+        removeUser()
+
+        window.location.pathname = '/'
     }
 }
 </script>
-
 
 <style>
     .router-link-active {

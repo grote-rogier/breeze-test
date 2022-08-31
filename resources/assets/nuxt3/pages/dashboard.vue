@@ -1,5 +1,6 @@
 <template>
     <div class="bg-blue-300 p-5">
+        <Title>Dashboard | {{ title }}</Title>
         <h1 class="text-3xl font-bold">DASHBOARD</h1>
         <div v-if="user" class="mt-5">
             <p>Name: {{ user.name }}</p>
@@ -23,6 +24,11 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: ['auth']
+})
+
+const title = useState('title')
 const { $apiFetch } = useNuxtApp()
 const user = ref(null)
 const posts = ref([])

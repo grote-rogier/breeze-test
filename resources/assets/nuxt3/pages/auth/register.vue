@@ -16,6 +16,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: ['guest']
+})
+
 const title = useState('title')
 const email = ref('')
 const name = ref('')
@@ -42,7 +46,10 @@ async function register() {
             }
         })
 
-        navigateTo('/dashboard')
+        const user = await $apiFetch('/api/user')
+        useAuth().setUser(user.name)
+
+        window.location.pathname = '/dashboard'
     } catch (err) {
         errors.value = Object.values(err.data.errors).flat()
     }
