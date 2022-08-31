@@ -1,11 +1,17 @@
 <template>
     <div class="bg-gray-100 min-h-screen text-gray-900">
         <Title>{{ title }}</Title>
-        <nav class="bg-amber-200 px-6 py-4 flex justify-between items-center border-b border-amber-500 shadow-md">
-            <NuxtLink to="/" class="font-bold">Home</NuxtLink>
-            <ul class="flex align-center space-x-12">
-                <li><NuxtLink to="/about" class="font-bold">About</NuxtLink></li>
-                <li><NuxtLink to="/contact" class="font-bold">Contact</NuxtLink></li>
+        <nav class="bg-amber-200 px-6 flex justify-between items-center border-b border-amber-500 shadow-md">
+            <ul class="flex align-center space-x-4">
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/">Home</NuxtLink></li>
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/posts">Posts</NuxtLink></li>
+            </ul>
+            <ul class="flex align-center space-x-4">
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/auth/login">Login</NuxtLink></li>
+                <li class="p-4 font-bold hover:bg-amber-400 cursor-pointer" @click="logout">Logout</li>
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/auth/register">Register</NuxtLink></li>
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/about">About</NuxtLink></li>
+                <li class="p-4 font-bold hover:bg-amber-400"><NuxtLink to="/contact">Contact</NuxtLink></li>
             </ul>
         </nav>
 
@@ -16,7 +22,20 @@
 </template>
 
 <script setup>
+const { $apiFetch } = useNuxtApp()
 const title = useState('title', () => 'Nuxt3 Breeze Test')
+
+async function logout() {
+    try {
+        await $apiFetch('/logout', {
+            method: 'POST'
+        })
+    } catch (err) {
+        console.error(err)
+    } finally {
+        navigateTo('/')
+    }
+}
 </script>
 
 
