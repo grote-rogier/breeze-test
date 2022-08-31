@@ -18,7 +18,6 @@
 const title = ref('')
 const body = ref('')
 const errors = ref([])
-const router = useRouter()
 
 async function createPost() {
     try {
@@ -33,7 +32,7 @@ async function createPost() {
         title.value = ''
         body.value = ''
 
-        router.push('/')
+        useRouter().push('/posts')
     } catch (err) {
         errors.value = Object.values(err.data.errors).flat()
     }

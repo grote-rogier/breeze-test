@@ -27,7 +27,6 @@
 
     const email = ref('')
     const password = ref('')
-    const isLoading = ref(false)
     const errors = ref([])
 
     const { $apiFetch } = useNuxtApp()
@@ -38,7 +37,6 @@
 
     async function login() {
         await csrf()
-        // await $apiFetch('/sanctum/csrf-cookie')
 
         try {
             await $apiFetch('/login', {
@@ -48,7 +46,7 @@
                     password: password.value
                 }
             })
-
+            navigateTo('/dashboard')
         } catch (err) {
             errors.value = Object.values(err.data.errors).flat()
         }

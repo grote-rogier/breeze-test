@@ -28,7 +28,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = new Post($request->validated());
-        $post->user()->associate(User::first());
+        $post->user()->associate(auth()->id());
         $post->save();
 
         return $post;
