@@ -31,12 +31,19 @@ const body = ref('')
 const errors = ref([])
 const { $apiFetch } = useNuxtApp()
 const route = useRoute()
+const router = useRouter()
 const post = ref(null)
 
 onMounted(async () => {
-    post.value = await $apiFetch(`/api/posts/${route.params.id}`)
-    title.value = post.value.title
-    body.value = post.value.body
+    try {
+        post.value = await $apiFetch(`/api/posts-auth/${route.params.id}`)
+        title.value = post.value.title
+        body.value = post.value.body
+    } catch (e) {
+        window.alert('No no no')
+        router.replace('/dashboard')
+    }
+
 })
 
 async function updatePost() {
@@ -52,8 +59,12 @@ async function updatePost() {
         title.value = ''
         body.value = ''
 
-        useRouter().push('/dashboard')
+        router.push('/dashboard')
     } catch (err) {
+        if (err.response.status === 403) {
+            window.alert("Can't touch this")
+            router.push('/dashboard')
+        }
         errors.value = Object.values(err.data.errors).flat()
     }
 }
@@ -62,10 +73,14 @@ async function deletePost() {
     try {
         const post = await $apiFetch(`api/posts/${route.params.id}`, {
             method: 'DELETE',
-        });
+        })
 
-        useRouter().push('/dashboard')
+        router.push('/dashboard')
     } catch (err) {
+        if (err.response.status === 403) {
+            window.alert('No way you gonna throw this post away!')
+            router.push('/dashboard')
+        }
         errors.value = Object.values(err.data.errors).flat()
     }
 }

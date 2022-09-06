@@ -27,9 +27,14 @@ class PostController extends Controller
 
     public function show(Post $post): Post
     {
-        $post->load('user:id,name');
+        return $post->load('user:id,name');
+    }
 
-        return $post;
+    public function edit(Post $post): Post
+    {
+        $this->authorize('update', $post);
+
+        return $post->load('user:id,name');
     }
 
     public function update(PostRequest $request, Post $post): Post
