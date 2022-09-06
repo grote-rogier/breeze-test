@@ -9,7 +9,9 @@
             <ClientOnly>
                 <ul class="flex align-center space-x-4">
                     <li v-if="isLoggedIn" class="p-4 font-bold bg-amber-100">
-                        {{ getUser()?.name }}
+                        <NuxtLink to="/dashboard">
+                            {{ getUser()?.name }}
+                        </NuxtLink>
                     </li>
                     <li v-else class="p-4 font-bold hover:bg-amber-400">
                         <NuxtLink to="/auth/login">Login</NuxtLink>

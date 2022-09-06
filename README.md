@@ -1,3 +1,7 @@
 # Laravel + Breeze
-See: [https://github.com/filippetrovicAT/breeze-nuxt?ref=vuejsexamples.com](https://github.com/filippetrovicAT/breeze-nuxt?ref=vuejsexamples.com)
-for setting up the front-end (not included in this repo).
+
+## Runnen:
+
+* `php artisan serve` om de backend te draaien
+* `cd resources/assets/nuxt3 && npm run dev` om de frontend te draaien
+* `localhost:3000` bezoeken en gooo!

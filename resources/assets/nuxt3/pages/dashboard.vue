@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-blue-300 p-5">
+    <div class="bg-blue-200 rounded border-blue-400 border p-5">
         <Title>Dashboard | {{ title }}</Title>
         <h1 class="text-3xl font-bold">DASHBOARD</h1>
         <div v-if="user" class="mt-5">
@@ -12,6 +12,10 @@
                     <li v-for="post in posts" :key="post.id">
                         <NuxtLink :to="`/posts/${post.id}`" class="text-blue-600 hover:underline">
                             {{ post.title }}
+                        </NuxtLink>
+                        &middot;
+                        <NuxtLink :to="`/posts/${post.id}/edit`" class="text-blue-600 hover:underline">
+                            Edit
                         </NuxtLink>
                     </li>
                 </ul>

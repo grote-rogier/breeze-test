@@ -3,6 +3,9 @@
         <ul v-if="errors.length">
             <li v-for="(error, index) in errors" :key="index" class="text-red-700">{{ error }}</li>
         </ul>
+
+        <h2 class="text-4xl font-bold mb-4">Create a Post</h2>
+
         <form @submit.prevent="createPost" class="w-1/2">
             <input type="text" v-model="title" placeholder="title"  class="p-3 mb-4 w-full block shadow" />
             <textarea v-model="body" class="p-3 shadow w-full h-80" />

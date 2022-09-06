@@ -2,30 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Collection
     {
         return Post::with('user:id,name')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePostRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request): Post
     {
         $post = new Post($request->validated());
         $post->user()->associate(auth()->id());
@@ -34,39 +25,26 @@ class PostController extends Controller
         return $post;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
+    public function show(Post $post): Post
     {
         $post->load('user:id,name');
 
         return $post;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
+    public function update(PostRequest $request, Post $post): Post
     {
-        //
+        $this->authorize('edit', $post);
+
+        $post->update($request->validated());
+
+        return $post;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatePostRequest  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function destroy(Post $post): bool
     {
-        //
+        $this->authorize('delete', $post);
+
+        return $post->delete();
     }
 }
